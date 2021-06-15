@@ -7,13 +7,11 @@ type TCitySelect = {
 }
 
 type TOption = {
-	city: string,
-	selectd?: boolean
+	city: string
 }
 
-function Option({ city, selectd }: TOption){
-	if(selectd) return <option value={city} selected>{city}</option>;
-	else return <option value={city}>{city}</option>;
+function Option({ city }: TOption){
+	return <option value={city}>{city}</option>;
 }
 
 export default function CitySelect({ city, setCity }: TCitySelect){
@@ -24,8 +22,9 @@ export default function CitySelect({ city, setCity }: TCitySelect){
 	return (
 		<select
 			onChange={handleChange}
+			defaultValue={city}
 		>
-			{cities.map((i, index) => <Option city={i} selectd={i === city} key={index}/>)}
+			{cities.map((i, index) => <Option city={i} key={index}/>)}
 		</select>
 	);
 }
