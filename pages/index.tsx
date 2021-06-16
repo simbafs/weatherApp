@@ -1,7 +1,6 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/index.module.css'
-import axios from 'axios';
 
 import CirySelect from '../component/CitySelect';
 import {useEffect, useState} from 'react';
@@ -17,7 +16,7 @@ function qs(query: { [name:string]: any }): string{
 }
 
 export default function Home() {
-	const [ city, setCity ] = useState("新北市");
+	const [ city, setCity ] = useState("中和區");
 	const [ weather, setWeather ] = useState({
 		startTime: '',
 		endTime: '',
@@ -34,14 +33,14 @@ export default function Home() {
 			locationName: city
 		})
 		fetch(`${url}?${query}`)
-			.then(res => res.json())
-			.then(res => console.log(res.records.location[0]))
-			.catch(console.error);
+		.then(res => res.json())
+		.then(res => console.log(res.records.location[0]))
+		.catch(console.error);
 	}, [ city ]);
 	return (
 		<>
-			<CirySelect city={city} setCity={setCity}/>
 			<div className={styles.card}>
+				<CirySelect city={city} setCity={setCity}/>
 				<h1>{ city }</h1>
 
 			</div>

@@ -1,5 +1,6 @@
-import {useEffect, useState, ChangeEvent, ChangeEventHandler} from 'react';
 import cities from './city.json';
+import Select from 'react-select';
+import styles from './style.module.css';
 
 type TCitySelect = {
 	city: string,
@@ -7,24 +8,28 @@ type TCitySelect = {
 }
 
 type TOption = {
-	city: string
-}
-
-function Option({ city }: TOption){
-	return <option value={city}>{city}</option>;
+	label: string,
+	value: string
 }
 
 export default function CitySelect({ city, setCity }: TCitySelect){
-	const handleChange: ChangeEventHandler = (e: ChangeEvent<HTMLInputElement>) => {
-		setCity(e.target.value);
-	}
+	const handelChange = (data: TOption) => setCity(data.value);
+
+	const formatGroupLabel = (data: { label: string, options: TOption[] }) => (
+		<div className={styles.groupStyles}>
+			<span>{data.label}</span>
+			<span className={styles.groupBadgeStyles}>{data.options.length}</span>
+		</div>
+	);
+
 
 	return (
-		<select
-			onChange={handleChange}
-			defaultValue={city}
-		>
-			{cities.map((i, index) => <Option city={i} key={index}/>)}
-		</select>
+		<Select
+			options={cities}
+			onChange={handelChange}
+			defaultValue={{ label: city, value: city }}
+			formatGroupLabel={formatGroupLabel}
+			isSearchable={true}
+		/>
 	);
 }
