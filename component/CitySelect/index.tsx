@@ -2,14 +2,19 @@ import cities from './city.json';
 import Select from 'react-select';
 import styles from './style.module.css';
 
+type TValue = {
+	name: string,
+	county: string
+}
+
 type TCitySelect = {
-	city: string,
-	setCity: (city: string) => void
+	city: TValue,
+	setCity: (city: TValue) => void
 }
 
 type TOption = {
 	label: string,
-	value: string
+	value: TValue
 }
 
 export default function CitySelect({ city, setCity }: TCitySelect){
@@ -27,7 +32,7 @@ export default function CitySelect({ city, setCity }: TCitySelect){
 		<Select
 			options={cities}
 			onChange={handelChange}
-			defaultValue={{ label: city, value: city }}
+			defaultValue={{ label: city.name, value: city }}
 			formatGroupLabel={formatGroupLabel}
 			isSearchable={true}
 		/>

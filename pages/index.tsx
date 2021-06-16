@@ -16,7 +16,7 @@ function qs(query: { [name:string]: any }): string{
 }
 
 export default function Home() {
-	const [ city, setCity ] = useState("中和區");
+	const [ city, setCity ] = useState({ name: " 板橋區", county: "F-D0047-069" });
 	const [ weather, setWeather ] = useState({
 		startTime: '',
 		endTime: '',
@@ -41,7 +41,7 @@ export default function Home() {
 		<>
 			<div className={styles.card}>
 				<CirySelect city={city} setCity={setCity}/>
-				<h1>{ city }</h1>
+				<h1>{ city.name }</h1>
 
 			</div>
 		</>
