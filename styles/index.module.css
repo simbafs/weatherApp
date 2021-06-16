@@ -6,3 +6,10 @@
 	border: solid var(--color-5);
 	background-color: white;
 }
+
+@media all and (max-width: 500px) {
+	.card {
+		width: 100%;
+		margin: 20px;
+	}
+}
