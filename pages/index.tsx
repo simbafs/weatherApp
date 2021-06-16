@@ -2,8 +2,9 @@ import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/index.module.css'
 
-import CirySelect from '../component/CitySelect';
 import {useEffect, useState} from 'react';
+import CirySelect, { TValue } from '../component/CitySelect';
+import WeatherDisplay, { TWeatherElement } from '../component/WeatherDisplay';
 
 const token = 'CWB-25BB0BA2-9449-4DD2-82D6-D835F21722EE';
 
@@ -16,25 +17,18 @@ function qs(query: { [name:string]: any }): string{
 }
 
 export default function Home() {
-	const [ city, setCity ] = useState({ name: " 板橋區", county: "F-D0047-069" });
-	const [ weather, setWeather ] = useState({
-		startTime: '',
-		endTime: '',
-		description: '',
-		maxTemp: 0,
-		minTemp: 0,
-		rain: 0
-	});
+	const [ city, setCity ] = useState<TValue>({ name: " 板橋區", county: "F-D0047-069" });
+	const [ weather, setWeather ] = useState<TWeatherElement | {}>({});
 	useEffect(() => {
-		const url = 'https://opendata.cwb.gov.tw/api/v1/rest/datastore/F-C0032-001';
-		// const url = 'https://opendata.cwb.gov.tw/api/v1/rest/datastore/O-A0003-001';
+		const url = 'https://opendata.cwb.gov.tw/api/v1/rest/datastore';
 		const query = qs({
 			Authorization: token,
-			locationName: city
+			locationName: city.name
 		})
-		fetch(`${url}?${query}`)
+		fetch(`${url}/${city.county}?${query}`)
 		.then(res => res.json())
-		.then(res => console.log(res.records.location[0]))
+		.then(res => res.records.locations[0].location[0].weatherElement)
+		.then(res => setWeather(res))
 		.catch(console.error);
 	}, [ city ]);
 	return (
@@ -42,7 +36,7 @@ export default function Home() {
 			<div className={styles.card}>
 				<CirySelect city={city} setCity={setCity}/>
 				<h1>{ city.name }</h1>
-
+				<WeatherDisplay weather={weather}/>
 			</div>
 		</>
 	)

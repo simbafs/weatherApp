@@ -2,17 +2,17 @@ import cities from './city.json';
 import Select from 'react-select';
 import styles from './style.module.css';
 
-type TValue = {
+export type TValue = {
 	name: string,
 	county: string
 }
 
-type TCitySelect = {
+export type TCitySelect = {
 	city: TValue,
 	setCity: (city: TValue) => void
 }
 
-type TOption = {
+export type TOption = {
 	label: string,
 	value: TValue
 }
