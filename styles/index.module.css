@@ -11,5 +11,6 @@
 	.card {
 		width: 100%;
 		margin: 20px;
+		padding: 30px 10px;
 	}
 }

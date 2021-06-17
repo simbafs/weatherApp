@@ -65,7 +65,9 @@ export default function WeatherDisplay({ city }: TWeatherProps){
 					</LineChart>
 				</ResponsiveContainer>
 			</div>
-			<pre>{JSON.stringify(weather.raw, null, 2)}</pre>
+			{
+			// <pre>{JSON.stringify(weather.raw, null, 2)}</pre>
+			}
 		</>
 	);
 }
