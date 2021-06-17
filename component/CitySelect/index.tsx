@@ -2,23 +2,11 @@ import cities from './city.json';
 import Select from 'react-select';
 import styles from './style.module.css';
 
-export type TValue = {
-	name: string,
-	county: string
-}
-
-export type TCitySelect = {
-	city: TValue,
-	setCity: (city: TValue) => void
-}
-
-export type TOption = {
-	label: string,
-	value: TValue
-}
+import type { TCitySelect, TOption } from './index.d';
+import type { ValueType } from 'react-select';
 
 export default function CitySelect({ city, setCity }: TCitySelect){
-	const handelChange = (data: TOption) => setCity(data.value);
+	const handelChange = (data: ValueType<TOption, false>) => data ? setCity(data.value) : null;
 
 	const formatGroupLabel = (data: { label: string, options: TOption[] }) => (
 		<div className={styles.groupStyles}>
@@ -27,9 +15,9 @@ export default function CitySelect({ city, setCity }: TCitySelect){
 		</div>
 	);
 
-
 	return (
 		<Select
+			instanceId="citySelect"
 			options={cities}
 			onChange={handelChange}
 			defaultValue={{ label: city.name, value: city }}
