@@ -3,7 +3,8 @@ import type { TCity } from '../CitySelect'
 export type TWeatherRecord = {
 	startTime: string,
 	endTime: string,
-	ementValue: {
+	dataTime?: string,
+	elementValue: {
 		measure: any,
 		value: any
 	}[]
