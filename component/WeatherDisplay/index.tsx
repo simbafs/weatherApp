@@ -2,7 +2,12 @@ import useSWR from "swr";
 import { ResponsiveContainer, LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, Legend } from 'recharts';
 
 import type { TCity } from '../CitySelect/index.d';
-import type { TWeatherProps, TWeatherElement } from './index.d';
+import type { 
+	TWeatherProps, 
+	TWeatherElement, 
+	TWeatherElementProps,
+	TFormattedWeatherElement
+} from './index.d';
 
 import styles from './styles.module.css';
 
@@ -16,14 +21,29 @@ function qs(query: { [name:string]: any }): string{
 	return result;
 }
 
+function findWeatherElement(weather: TWeatherElement[], name: string){
+	return weather.find(i => i.elementName === name) || weather[0];
+}
+
 function formatWeather(weather: TWeatherElement[]){
-	let WS = weather[8].time.map(i => ({
+	let WS = findWeatherElement(weather, 'WS').time.map(i => ({
 		time: i.dataTime,
-		WS: i.elementValue[0].value
-	}));
+		'風速(m/s)': i.elementValue[0].value
+	})) as TFormattedWeatherElement[];
+	let PoP12h = findWeatherElement(weather, 'PoP12h').time.map(i => ({
+		time: i.startTime,
+		'降雨機率(%)': i.elementValue[0].value
+	})) as TFormattedWeatherElement[];
+	let AT = findWeatherElement(weather, 'AT').time.map(i => ({
+		time: i.dataTime,
+		'體感溫度(°C)': i.elementValue[0].value
+	})) as TFormattedWeatherElement[];
+
 	return {
 		raw: weather,
-		data: WS
+		WS,
+		PoP12h,
+		AT
 	};
 }
 
@@ -41,6 +61,22 @@ function fetchWeather(city: TCity){
 	.catch(console.error);
 }
 
+function WeatherElement({ weatherEle, value }: TWeatherElementProps){
+	return (
+		<ResponsiveContainer width="90%" height={300} >
+			<LineChart data={weatherEle}>
+				<CartesianGrid stroke="#ccc" strokeDasharray="3 3" y={10} />
+				<XAxis dataKey="time" />
+				<YAxis padding={{ top: 30 }} />
+				<Legend />
+				<Tooltip />
+
+				<Line type="natural" dataKey={value} stroke="#8884d8" />
+			</LineChart>
+		</ResponsiveContainer>
+	)
+}
+
 export default function WeatherDisplay({ city }: TWeatherProps){
 	const { data: weather, error } = useSWR(
 		() => `fetch ${city.name}`,
@@ -53,21 +89,13 @@ export default function WeatherDisplay({ city }: TWeatherProps){
 	else return (
 		<>
 			<div className={styles.weatherDisplay}>
-				<ResponsiveContainer width="90%" height={300} >
-					<LineChart data={weather.data}>
-						<CartesianGrid stroke="#ccc" strokeDasharray="3 3"/>
-						<XAxis dataKey="time" />
-						<YAxis label={{ value: 'wind speed', angle: -90, position: 'insideLeft' }}/>
-						<Legend />
-						<Tooltip />
-
-						<Line type="natural" dataKey="WS" stroke="#8884d8" />
-					</LineChart>
-				</ResponsiveContainer>
+				<WeatherElement weatherEle={weather.WS} value='風速(m/s)'/>
+				<WeatherElement weatherEle={weather.PoP12h} value='降雨機率(%)' />
+				<WeatherElement weatherEle={weather.AT} value='體感溫度(°C)' />
 			</div>
-			{
-			// <pre>{JSON.stringify(weather.raw, null, 2)}</pre>
-			}
+			{/*
+			<pre>{JSON.stringify(weather.raw, null, 2)}</pre>
+			*/}
 		</>
 	);
 }

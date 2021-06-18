@@ -20,3 +20,12 @@ export type TWeatherProps = {
 	city: TCity
 }
 
+type TFormattedWeatherElement = {
+	time: string,
+	[value: string]: string
+}
+
+export type TWeatherElementProps = {
+	weatherEle: TFormattedWeatherElement[]
+	value: string
+}

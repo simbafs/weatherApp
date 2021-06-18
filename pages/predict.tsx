@@ -1,12 +1,10 @@
-import {useEffect, useState} from 'react';
-import useSWR from 'swr';
-import CirySelect, { TCity } from '../component/CitySelect';
+import { useState } from 'react';
+import CirySelect from '../component/CitySelect';
 import WeatherDisplay from '../component/WeatherDisplay';
-import type { TWeatherElement } from '../component/WeatherDisplay';
+
+import type { TCity } from '../component/CitySelect/index.d';
 
 import styles from '../styles/index.module.css';
-
-
 
 export default function Home() {
 	const [ city, setCity ] = useState<TCity>({ name: "板橋區", county: "F-D0047-069" });
