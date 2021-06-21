@@ -1,10 +1,10 @@
 import useSWR from "swr";
 import { ResponsiveContainer, LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, Legend } from 'recharts';
 
-import type { TCity } from '../CitySelect/index.d';
-import type { 
-	TWeatherProps, 
-	TWeatherElement, 
+import type { TLocation } from '../Select/index.d';
+import type {
+	TWeatherProps,
+	TWeatherElement,
 	TWeatherElementProps,
 	TFormattedWeatherElement
 } from './index.d';
@@ -18,14 +18,18 @@ function qs(query: { [name:string]: any }): string{
 	for(let [key, value] of Object.entries(query)){
 		result += `${key}=${value.toString()}&`;
 	}
+
+	// remove the last '&'
+	result = result.slice(0, -1);
+
 	return result;
 }
 
-function findWeatherElement(weather: TWeatherElement[], name: string){
-	return weather.find(i => i.elementName === name) || weather[0];
-}
-
 function formatWeather(weather: TWeatherElement[]){
+	function findWeatherElement(weather: TWeatherElement[], name: string){
+		return weather.find(i => i.elementName === name) || weather[0];
+	}
+
 	let WS = findWeatherElement(weather, 'WS').time.map(i => ({
 		time: i.dataTime,
 		'風速(m/s)': i.elementValue[0].value
@@ -47,14 +51,14 @@ function formatWeather(weather: TWeatherElement[]){
 	};
 }
 
-function fetchWeather(city: TCity){
+async function fetchWeather(city: TLocation){
 	const url = 'https://opendata.cwb.gov.tw/api/v1/rest/datastore';
 	const query = qs({
 		Authorization: token,
-		locationName: city.name
+		locationName: encodeURI(city.label)
 	})
-	console.log('fetch url', `${url}/${city.county}?${query}`);
-	return fetch(`${url}/${city.county}?${query}`)
+	// console.log('fetch url', `${url}/${city.value}?${query}`);
+	return fetch(`${url}/${city.value.split('--')[1]}?${query}`)
 	.then(res => res.json())
 	.then(res => res.records.locations[0].location[0].weatherElement)
 	.then(res => formatWeather(res))
@@ -77,15 +81,15 @@ function WeatherElement({ weatherEle, value }: TWeatherElementProps){
 	)
 }
 
-export default function WeatherDisplay({ city }: TWeatherProps){
+export default function PredictDisplay({ city }: TWeatherProps){
 	const { data: weather, error } = useSWR(
-		() => `fetch ${city.name}`,
-		() => fetchWeather(city),
-		{ refreshInterval: 600*1000 }
+		() => `fetch ${city.label}`,
+		() => fetchWeather(city)
 	);
 
-	if(error) return <pre>{error}</pre>
+	if(error) return <pre>{error}</pre>;
 	if(!weather) return <h3>Loading ...</h3>;
+	if(error) return <h3>Error: {error}</h3>;
 	else return (
 		<>
 			<div className={styles.weatherDisplay}>
@@ -94,8 +98,8 @@ export default function WeatherDisplay({ city }: TWeatherProps){
 				<WeatherElement weatherEle={weather.AT} value='體感溫度(°C)' />
 			</div>
 			{/*
-			<pre>{JSON.stringify(weather.raw, null, 2)}</pre>
-			*/}
+				<pre>{JSON.stringify(weather.raw, null, 2)}</pre>
+			  */}
 		</>
 	);
 }

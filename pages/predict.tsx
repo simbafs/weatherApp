@@ -1,21 +1,23 @@
 import { useState } from 'react';
-import CirySelect from '../component/CitySelect';
-import WeatherDisplay from '../component/WeatherDisplay';
+import Select from '../component/Select';
+import PredictDisplay from '../component/PredictDisplay';
+import cities from '../data/city.json';
 
-import type { TCity } from '../component/CitySelect/index.d';
-
-import styles from '../styles/index.module.css';
+import type { TLocation } from '../component/Select/index.d';
 
 export default function Home() {
-	const [ city, setCity ] = useState<TCity>({ name: "板橋區", county: "F-D0047-069" });
+	const [ city, setCity ] = useState<TLocation>({ label: "板橋區", value: "F-D0047-069" });
 
 	return (
 		<>
-			<div className={styles.card}>
-				<CirySelect city={city} setCity={setCity}/>
-				<h1>{ city.name }</h1>
-				<WeatherDisplay city={city} />
-			</div>
+			<Select
+				state={city}
+				setState={setCity}
+				options={cities}
+				instanceId='SelectCities'
+			/>
+			<h1>{ city.label }</h1>
+			<PredictDisplay city={city} />
 		</>
 	)
 }
