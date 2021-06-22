@@ -3,6 +3,9 @@ import qs from '../../lib/qs';
 
 import { IRawWeatherData, IWeatherProps } from './index.d';
 
+import style from './widget/style.module.css';
+import { Temperature, Wind } from './widget';
+
 const token = process.env.CWBToken;
 
 function findWeatherElement(weather: IRawWeatherData, name: string){
@@ -23,6 +26,7 @@ async function fetcher(location: string){
 		raw: res,
 		formatted: {
 			風速: findWeatherElement(res, 'WDSD'),
+			風向: findWeatherElement(res, 'WDIR'),
 			溫度: findWeatherElement(res, 'TEMP'),
 			相對濕度: findWeatherElement(res, 'HUMD'),
 			測站氣壓: findWeatherElement(res, 'PRES'),
@@ -41,5 +45,13 @@ export default function WeatherDisplay({ location } : IWeatherProps){
 	if(!data) return <h1>Loading ...</h1>;
 	if(error) return <h1>Error: {JSON.stringify(error, null,2)}</h1>;
 
-	return <pre>{JSON.stringify(data.formatted, null, 2)}</pre>;
+	return (
+		<>
+			<div className={style.windAndTemp}>
+				<Temperature temp={data.formatted.溫度} />
+				<Wind speed={data.formatted.風速} direction={data.formatted.風向} />
+			</div>
+			<pre>{JSON.stringify(data.formatted, null, 2)}</pre>
+		</>
+	);
 }

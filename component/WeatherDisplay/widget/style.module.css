@@ -1,0 +1,17 @@
+.windAndTemp {
+	display: grid;
+	grid-template: auto auto / 6fr 4fr;
+	justify-items: center;
+	align-items: center;
+}
+
+.temp {
+	font-size: 100px;
+	margin: 0px;
+}
+
+.windSpeed {
+	grid-column: 2 / 3;
+	margin: 0px;
+}
+

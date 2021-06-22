@@ -13,7 +13,7 @@ html, body {
 	Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
-a, h1, h2, h3, h4, h5, h6a, p {
+a, h1, h2, h3, h4, h5, h6, a, p {
 	color: var(--color-5);
 }
 
