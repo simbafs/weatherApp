@@ -1,5 +1,6 @@
 import useSWR from "swr";
 import { ResponsiveContainer, LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, Legend } from 'recharts';
+import qs from '../../lib/qs';
 
 import type { TLocation } from '../Select/index.d';
 import type {
@@ -12,18 +13,6 @@ import type {
 import styles from './styles.module.css';
 
 const token = 'CWB-25BB0BA2-9449-4DD2-82D6-D835F21722EE';
-
-function qs(query: { [name:string]: any }): string{
-	let result = '';
-	for(let [key, value] of Object.entries(query)){
-		result += `${key}=${value.toString()}&`;
-	}
-
-	// remove the last '&'
-	result = result.slice(0, -1);
-
-	return result;
-}
 
 function formatWeather(weather: TWeatherElement[]){
 	function findWeatherElement(weather: TWeatherElement[], name: string){
@@ -56,7 +45,7 @@ async function fetchWeather(city: TLocation){
 	const query = qs({
 		Authorization: token,
 		locationName: encodeURI(city.label)
-	})
+	});
 	// console.log('fetch url', `${url}/${city.value}?${query}`);
 	return fetch(`${url}/${city.value.split('--')[1]}?${query}`)
 	.then(res => res.json())
