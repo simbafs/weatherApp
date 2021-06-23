@@ -2,8 +2,6 @@ import '../styles/globals.css'
 import Head from 'next/head'
 import type { AppProps } from 'next/app'
 
-import styles from '../styles/index.module.css';
-
 function MyApp({ Component, pageProps }: AppProps) {
 	return (
 		<>
@@ -12,7 +10,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 				<link rel="shortcut icon" href="/favicon.ico" />
 			</Head>
 			<div id="container">
-				<div className={styles.card}>
+				<div className="card">
 					<Component {...pageProps} />
 				</div>
 			</div>
