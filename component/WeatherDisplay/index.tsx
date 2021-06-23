@@ -4,7 +4,7 @@ import qs from '../../lib/qs';
 import { IRawWeatherData, IWeatherProps } from './index.d';
 
 import style from './style.module.css';
-import { Temperature, Wind, Info } from './widget';
+import { Temperature, Wind, Info, Weather } from './widget';
 
 const token = process.env.CWBToken;
 
@@ -59,7 +59,10 @@ export default function WeatherDisplay({ location } : IWeatherProps){
 				minTempTime={data.formatted.本日最低溫發生時間}
 				pressure={data.formatted.測站氣壓}
 			/>
-			<pre>{JSON.stringify(data.formatted, null, 2)}</pre>
+			<Weather weather={data.formatted.天氣狀況}/>
+			{
+			// <pre>{JSON.stringify(data.formatted, null, 2)}</pre>
+			}
 		</>
 	);
 }
