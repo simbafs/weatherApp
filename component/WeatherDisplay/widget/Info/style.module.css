@@ -1,11 +1,13 @@
 .Info {
 	margin-top: 40px;
 	display: grid;
-	grid-template: repeat(4, 1fr) / repeat(3, 1fr);
+	grid-template: repeat(4, 1fr) / 4fr 3fr 1fr;
+	margin: 20px 10px 0px;
 }
 
 .Info h3, .Info h5 {
 	margin: 0px;
+	text-align: left;
 }
 
 .Info :nth-child(3){

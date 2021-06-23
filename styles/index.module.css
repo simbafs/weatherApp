@@ -7,7 +7,7 @@
 	background-color: white;
 }
 
-@media all and (max-width: 500px) {
+@media all and (max-width: 540px) {
 	.card {
 		width: 100%;
 		margin: 20px;

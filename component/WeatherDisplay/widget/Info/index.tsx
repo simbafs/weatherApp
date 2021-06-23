@@ -9,13 +9,10 @@ interface IInfoProps {
 
 import style from './style.module.css';
 
-const addColon = (time: string) => time.slice(0, 2) + ':' + time.slice(2, 4);
-
-const temperature = (temp: string) => temp + '°C';
-
-const humi = (humidity: string) => parseFloat(humidity) * 100 + '%';
-
-const pres = (pressure: string) => pressure + 'hPa';
+const addColon = (time: string) => time === '-99' ? '無資料' : time.slice(0, 2) + ':' + time.slice(2, 4);
+const temperature = (temp: string) => temp === '-99' ? '無資料' : temp + '°C';
+const humi = (humidity: string) => humidity === '-99' ? '無資料' : parseFloat(humidity) * 100 + '%';
+const pres = (pressure: string) => pressure === '-99' ? '無資料' : pressure + 'hPa';
 
 export default function Info({ humidity, maxTemp, maxTempTime, minTemp, minTempTime, pressure }: IInfoProps){
 	return (

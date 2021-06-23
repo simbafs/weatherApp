@@ -2,3 +2,9 @@
 	font-size: 120px;
 	margin: 0px;
 }
+
+@media all and (max-width: 830px){
+	.Weather {
+		font-size: 80px;
+	}
+}
