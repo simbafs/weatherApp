@@ -3,8 +3,8 @@ import qs from '../../lib/qs';
 
 import { IRawWeatherData, IWeatherProps } from './index.d';
 
-import style from './widget/style.module.css';
-import { Temperature, Wind } from './widget';
+import style from './style.module.css';
+import { Temperature, Wind, Info } from './widget';
 
 const token = process.env.CWBToken;
 
@@ -51,6 +51,14 @@ export default function WeatherDisplay({ location } : IWeatherProps){
 				<Temperature temp={data.formatted.溫度} />
 				<Wind speed={data.formatted.風速} direction={data.formatted.風向} />
 			</div>
+			<Info 
+				humidity={data.formatted.相對濕度}
+				maxTemp={data.formatted.本日最高溫}
+				maxTempTime={data.formatted.本日最高溫發生時間}
+				minTemp={data.formatted.本日最低溫}
+				minTempTime={data.formatted.本日最低溫發生時間}
+				pressure={data.formatted.測站氣壓}
+			/>
 			<pre>{JSON.stringify(data.formatted, null, 2)}</pre>
 		</>
 	);

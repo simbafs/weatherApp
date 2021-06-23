@@ -1,0 +1,13 @@
+.Info {
+	margin-top: 40px;
+	display: grid;
+	grid-template: repeat(4, 1fr) / repeat(3, 1fr);
+}
+
+.Info h4, .Info h6 {
+	margin: 0px;
+}
+
+.Info :nth-child(3){
+	grid-column: 1;
+}
