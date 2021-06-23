@@ -4,7 +4,7 @@
 	grid-template: repeat(4, 1fr) / repeat(3, 1fr);
 }
 
-.Info h4, .Info h6 {
+.Info h3, .Info h5 {
 	margin: 0px;
 }
 
