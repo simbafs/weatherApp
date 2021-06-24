@@ -7,7 +7,7 @@
     "start": "next start",
     "build": "next build",
     "export": "npm run build && next export",
-	"deploy": "npx gh-pages -t -d out -b build"
+	"deploy": "gh-pages -t -d out -b build"
   },
   "dependencies": {
     "next": "10.2.3",

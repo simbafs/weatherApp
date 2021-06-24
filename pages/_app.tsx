@@ -2,12 +2,20 @@ import '../styles/globals.css'
 import Head from 'next/head'
 import type { AppProps } from 'next/app'
 
-function MyApp({ Component, pageProps }: AppProps) {
+export default function MyApp({ Component, pageProps }: AppProps) {
 	return (
 		<>
 			<Head>
 				<title>Weather App</title>
 				<link rel="shortcut icon" href="/favicon.ico" />
+				<link rel="manifest" href="/manifest.json" />
+				<link rel="apple-touch-icon" sizes="192x192" href="/icon-192.png" />
+				<link rel="shortcut icon" sizes="512x512" href="favicon.ico" />
+
+				<meta name="theme-color" content="#FFD347" />
+				<meta name="description" content="Weather App" />
+				<meta name="author" content="simba-fs" />
+				<meta name="keywords" content="weather Taiwan CWB" />
 			</Head>
 			<div id="container">
 				<div className="card">
@@ -17,4 +25,3 @@ function MyApp({ Component, pageProps }: AppProps) {
 		</>
 	);
 }
-export default MyApp
