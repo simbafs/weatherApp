@@ -60,6 +60,7 @@ export default function WeatherDisplay({ location } : IWeatherProps){
 				pressure={data.formatted.測站氣壓}
 			/>
 			<Weather weather={data.formatted.天氣狀況}/>
+			<h4>更新時間：{data.raw.time.obsTime}</h4>
 			{
 			// <pre>{JSON.stringify(data.formatted, null, 2)}</pre>
 			}

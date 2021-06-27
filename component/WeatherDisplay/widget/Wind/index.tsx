@@ -6,7 +6,6 @@ interface IWindProps {
 }
 
 export default function Wind({speed, direction}: IWindProps){
-	console.log(direction, parseInt(direction) - 180);
 	return (
 		<>
 			<svg className={style.windDir} width="210" height="210" xmlns="http://www.w3.org/2000/svg">
