@@ -1,8 +1,10 @@
 name: DEPLOY
+
 on:
   push:
-    branches:
-    - build
+    branches: [build]
+  pull_request:
+    branches: [build]
 
 jobs:
   deploy:
