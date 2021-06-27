@@ -18,8 +18,8 @@ export default function Select({ options, state, setState, instanceId }: TSelect
 		<ReactSelect
 			instanceId={instanceId}
 			options={options}
+			value={state}
 			onChange={handelChange}
-			defaultValue={state}
 			formatGroupLabel={formatGroupLabel}
 			isSearchable={true}
 		/>

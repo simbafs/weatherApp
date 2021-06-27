@@ -1,10 +1,8 @@
-import {useState} from 'react';
-import useSWR from 'swr';
+import {useEffect, useState} from 'react';
 import Select from '../component/Select';
 import WeatherDisplay from '../component/WeatherDisplay';
 
 import obversations from '../data/obversation.json';
-import getLocation from '../lib/getLocation';
 
 function getOptionsByTown(town: string){
 	let target = obversations
@@ -21,6 +19,17 @@ function getOptionsByTown(town: string){
 
 export default function Index(){
 	const [ obversation, setObversation ] = useState(getOptionsByTown('板橋區'));
+
+	// only exec when page load, getting town from localStorage
+	useEffect(() => {
+		setObversation(getOptionsByTown(localStorage.town));
+	}, []);
+
+	// exec every time when obversation change, saving it to localStorage
+	useEffect(() => {
+		localStorage.setItem('town', obversation.label.split(' - ')[0]);
+	}, [ obversation ]);
+
 	const selectOptions = obversations.map(i => ({
 		label: i.city,
 		options: i.obversation.map(i => ({
