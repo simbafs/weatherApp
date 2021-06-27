@@ -19,6 +19,7 @@ export default function Select({ options, state, setState, instanceId }: TSelect
 			instanceId={instanceId}
 			options={options}
 			value={state}
+			defaultValue={state}
 			onChange={handelChange}
 			formatGroupLabel={formatGroupLabel}
 			isSearchable={true}
