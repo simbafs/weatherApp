@@ -1,6 +1,7 @@
-import '../styles/globals.css'
-import Head from 'next/head'
-import type { AppProps } from 'next/app'
+import '../styles/globals.css';
+import Head from 'next/head';
+import Link from 'next/link';
+import type { AppProps } from 'next/app';
 
 export default function MyApp({ Component, pageProps }: AppProps) {
 	return (
@@ -22,6 +23,10 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 					<Component {...pageProps} />
 				</div>
 			</div>
+			<footer>
+				<span>CopyRight  ©  <a href="https://github.com/simba-fs">simba-fs</a></span>
+				<a href="https://github.com/simba-fs/weatherApp">Source Code</a>
+			</footer>
 		</>
 	);
 }
