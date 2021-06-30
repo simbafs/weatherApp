@@ -24,7 +24,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 				</div>
 			</div>
 			<footer>
-				<span>CopyRight  ©  <a href="https://github.com/simba-fs" target="_blank">simba-fs</a></span>
+				<span>Copyright  ©  <a href="https://github.com/simba-fs" target="_blank">simba-fs</a></span>
 				<a href="https://github.com/simba-fs/weatherApp" target="_blank">Source Code</a>
 			</footer>
 		</>
